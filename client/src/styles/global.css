@@ -1,0 +1,822 @@
+/*
+ * Dark theme and shared building blocks.
+ * Mobile-first: base rules target phones, @media (min-width) adds to them.
+ * Breakpoints (keep in sync with lib/breakpoints.js): tablet 768px, desktop 1024px.
+ */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #0a0d14;
+  --surface: #121722;
+  --surface-2: #19202e;
+  --surface-3: #222b3d;
+  --border: #283248;
+  --border-strong: #3a4763;
+
+  --text: #e9edf5;
+  --muted: #9aa5bd;
+  --faint: #7a86a0;
+
+  --primary: #6d8dff;
+  --primary-strong: #8ea6ff;
+  --primary-soft: rgba(109, 141, 255, 0.14);
+  --on-primary: #0a0d14;
+
+  /* Status colors: always shown together with a word, never alone. */
+  --good: #3fd08f;
+  --good-soft: rgba(63, 208, 143, 0.14);
+  --warn: #f3b955;
+  --warn-soft: rgba(243, 185, 85, 0.14);
+  --bad: #f4728a;
+  --bad-soft: rgba(244, 114, 138, 0.14);
+  --info: #5cc8f0;
+  --info-soft: rgba(92, 200, 240, 0.14);
+
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --page-max: 1280px;
+  --page-gutter: clamp(1rem, 3vw, 2rem);
+  /* Smallest comfortable touch target. */
+  --tap-target: 44px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Stop iOS from inflating text in landscape. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font);
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+dl,
+dd {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Inherited 16px also keeps iOS from zooming in when a field is focused. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-strong);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ layout */
+
+/* Centered column with side gutters that also clear the notch on landscape phones. */
+.container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-left: max(var(--page-gutter), env(safe-area-inset-left));
+  padding-right: max(var(--page-gutter), env(safe-area-inset-right));
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-width: 0;
+}
+
+.stack-sm {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.grow {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+/* Cards that fill the row and wrap by themselves: 1 column on a phone, more on wide screens. */
+.cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+
+.page-status {
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  min-height: 60dvh;
+  padding: var(--page-gutter);
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------------- text */
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.strong {
+  font-weight: 650;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.link {
+  color: var(--primary-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pre-line {
+  white-space: pre-line;
+}
+
+/* ------------------------------------------------------------------ cards */
+
+.card {
+  min-width: 0;
+  padding: 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.card-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.notice {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.notice svg {
+  flex: none;
+  margin-top: 0.15rem;
+}
+
+.notice.warn {
+  border-color: color-mix(in srgb, var(--warn) 45%, transparent);
+  background: var(--warn-soft);
+  color: var(--text);
+}
+
+.notice.bad {
+  border-color: color-mix(in srgb, var(--bad) 45%, transparent);
+  background: var(--bad-soft);
+  color: var(--text);
+}
+
+.notice.good {
+  border-color: color-mix(in srgb, var(--good) 45%, transparent);
+  background: var(--good-soft);
+  color: var(--text);
+}
+
+/* Label / value pairs. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+  gap: 0.75rem 1rem;
+}
+
+/* Two panels: stacked on a phone, side by side from the tablet breakpoint (first one as wide as its content). */
+.split {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .split {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.facts dt {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.facts dd {
+  overflow-wrap: anywhere;
+}
+
+.news-item {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  transition: border-color 0.15s;
+}
+
+.news-item:hover {
+  border-color: var(--primary);
+}
+
+.news-excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: var(--tap-target);
+  padding: 0 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+
+.btn:hover {
+  background: var(--surface-3);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  border-color: transparent;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-strong);
+}
+
+.btn-danger {
+  border-color: color-mix(in srgb, var(--bad) 50%, transparent);
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+
+.btn-danger:hover {
+  background: color-mix(in srgb, var(--bad) 24%, transparent);
+}
+
+.btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.btn-ghost:hover {
+  color: var(--text);
+}
+
+.btn-sm {
+  min-height: 36px;
+  padding: 0 0.7rem;
+  font-size: 0.875rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ------------------------------------------------------------------ forms */
+
+.form-grid {
+  display: grid;
+  gap: 0.9rem 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.field > span,
+.field > legend {
+  padding: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+fieldset.field {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field small {
+  color: var(--faint);
+}
+
+.input {
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input::placeholder {
+  color: var(--faint);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+textarea.input {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+select.input {
+  appearance: none;
+  padding-right: 2.2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%239aa5bd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: var(--tap-target);
+  cursor: pointer;
+}
+
+.check input {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--primary);
+}
+
+/* A row of exclusive choices drawn as buttons. */
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.segmented button,
+.segmented label {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: var(--tap-target);
+  padding: 0 0.9rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.segmented [aria-pressed='true'],
+.segmented label:has(input:checked) {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--text);
+}
+
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented label:has(input:focus-visible) {
+  outline: 2px solid var(--primary-strong);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------- tabs */
+
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+
+.tabs button {
+  flex: none;
+  min-height: var(--tap-target);
+  padding: 0 0.9rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tabs button[aria-selected='true'] {
+  border-bottom-color: var(--primary);
+  color: var(--text);
+}
+
+/* ----------------------------------------------------------------- badges */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.badge.good {
+  background: var(--good-soft);
+  color: var(--good);
+}
+
+.badge.warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.badge.bad {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+
+.badge.info {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.badge.primary {
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.chip:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+/* ------------------------------------------------------------------ tables */
+
+/*
+ * One markup, two looks: a normal table from the tablet breakpoint up, and on a
+ * phone every row becomes a card with the column name in front of each value.
+ */
+.table-wrap {
+  min-width: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  display: none;
+}
+
+.table tr {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+  padding: 0.9rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.table td {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.table td::before {
+  content: attr(data-label);
+  flex: none;
+  max-width: 45%;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.table td.actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 0.35rem;
+}
+
+.table td.actions::before {
+  content: none;
+}
+
+@media (min-width: 768px) {
+  .table-wrap {
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .table thead {
+    display: table-header-group;
+  }
+
+  .table tr {
+    display: table-row;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .table th,
+  .table td {
+    display: table-cell;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .table th {
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+
+  .table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .table tbody tr:hover {
+    background: var(--surface-2);
+  }
+
+  .table td::before {
+    content: none;
+  }
+
+  .table td.actions {
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .table td.actions > * + * {
+    margin-left: 0.4rem;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form-grid .wide {
+    grid-column: 1 / -1;
+  }
+
+  .form-grid.single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* A narrow centered column, for the login form and other short pages. */
+.narrow {
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+/* ------------------------------------------------------------------- modal */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  align-items: end;
+  background: rgba(4, 6, 10, 0.7);
+  backdrop-filter: blur(3px);
+}
+
+/* A bottom sheet on a phone, a centered window on larger screens. */
+.modal {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: 100%;
+  max-height: 92dvh;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: var(--shadow);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-body {
+  overflow-y: auto;
+  padding: 1.1rem;
+  padding-bottom: max(1.1rem, env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .modal-backdrop {
+    align-items: center;
+    justify-items: center;
+    padding: 1.5rem;
+  }
+
+  .modal {
+    max-width: 34rem;
+    max-height: 88dvh;
+    border-radius: var(--radius);
+  }
+
+  .modal.wide {
+    max-width: 56rem;
+  }
+}
+
+/* ------------------------------------------------------------------ toasts */
+
+.toasts {
+  position: fixed;
+  left: 50%;
+  bottom: calc(5rem + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: grid;
+  gap: 0.5rem;
+  width: min(92vw, 26rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--good);
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  box-shadow: var(--shadow);
+}
+
+.toast.bad {
+  border-left-color: var(--bad);
+}
+
+@media (min-width: 768px) {
+  .toasts {
+    bottom: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

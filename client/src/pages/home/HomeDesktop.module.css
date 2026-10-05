@@ -1,0 +1,181 @@
+/* Desktop and tablet first page: wide hero, side tiles on the left, lucky draw and news on the right. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background:
+    radial-gradient(60rem 28rem at 15% -10%, rgba(109, 141, 255, 0.16), transparent 70%),
+    radial-gradient(40rem 24rem at 95% 0%, rgba(155, 123, 255, 0.1), transparent 70%);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 4rem;
+}
+
+.nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 0.8rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav a:global(.active) {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.main {
+  flex: 1;
+  display: grid;
+  gap: 2rem;
+  align-content: start;
+  padding-top: 2.25rem;
+  padding-bottom: 3.5rem;
+}
+
+.hero {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.heroText {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 40rem;
+}
+
+.heroText h1 {
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  color: var(--primary-strong);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.counts > div {
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.counts dd {
+  font-size: 1.8rem;
+  font-weight: 750;
+  line-height: 1.1;
+}
+
+.counts dt {
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.columns {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.tiles {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 100%;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.tile:hover {
+  border-color: var(--primary);
+  background: var(--surface-2);
+  transform: translateY(-2px);
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 12px;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+.tileText {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.tileArrow {
+  flex: none;
+  margin-left: auto;
+  color: var(--faint);
+}
+
+.footer {
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--faint);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+
+  .columns {
+    grid-template-columns: minmax(0, 1.7fr) minmax(20rem, 1fr);
+  }
+}

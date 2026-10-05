@@ -1,0 +1,251 @@
+.shell {
+  min-height: 100dvh;
+  /* Room for the fixed bottom bar on phones. */
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+}
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topInner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--primary), #9b7bff);
+  color: var(--on-primary);
+}
+
+.mainNav {
+  display: none;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.points {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 36px;
+  padding: 0 0.7rem;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  font-weight: 700;
+}
+
+.main {
+  display: grid;
+  gap: 1.1rem;
+  align-content: start;
+  padding-top: 1.1rem;
+  padding-bottom: 1.5rem;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.back {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  margin-left: -0.6rem;
+  border-radius: 50%;
+  color: var(--muted);
+}
+
+.back:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* Sub-pages of one side: scrolling pills on a phone, a sidebar on a desktop. */
+.section {
+  display: grid;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.sideNav {
+  display: flex;
+  gap: 0.4rem;
+  margin-inline: calc(var(--page-gutter) * -1);
+  padding-inline: var(--page-gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sideNav a {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 40px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sideNav a:global(.active) {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--text);
+}
+
+.tabBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+}
+
+.tabBar a {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  padding: 0.5rem 0.2rem;
+  min-height: 3.5rem;
+  color: var(--faint);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.tabBar a:global(.active) {
+  color: var(--primary-strong);
+}
+
+@media (min-width: 768px) {
+  .shell {
+    padding-bottom: 0;
+  }
+
+  .tabBar {
+    display: none;
+  }
+
+  .topInner {
+    min-height: 4rem;
+  }
+
+  .mainNav {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: 1rem;
+  }
+
+  .mainNav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 0 0.8rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .mainNav a:hover {
+    color: var(--text);
+  }
+
+  .mainNav a:global(.active) {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  .main {
+    padding-top: 1.75rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    align-items: start;
+    gap: 1.75rem;
+  }
+
+  .sideNav {
+    position: sticky;
+    top: 5.25rem;
+    flex-direction: column;
+    margin-inline: 0;
+    padding: 0.5rem;
+    overflow: visible;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .sideNav a {
+    min-height: var(--tap-target);
+    border-color: transparent;
+    border-radius: var(--radius-sm);
+    background: none;
+    white-space: normal;
+  }
+
+  .sideNav a:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+}

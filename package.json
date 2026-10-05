@@ -1,0 +1,18 @@
+{
+  "name": "thisone",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server",
+    "db:setup": "npm run db:setup -w server",
+    "db:seed": "npm run db:seed -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

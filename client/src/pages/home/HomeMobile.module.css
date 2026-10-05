@@ -1,0 +1,93 @@
+/* Phone first page: one column, thumb-sized tiles, bottom tab bar. */
+
+.page {
+  min-height: 100dvh;
+  /* Room for the fixed bottom bar. */
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  background: radial-gradient(28rem 16rem at 50% -4rem, rgba(109, 141, 255, 0.2), transparent 70%);
+}
+
+.topBar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding-top: env(safe-area-inset-top);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topBarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.5rem;
+}
+
+.main {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+
+.welcome {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: linear-gradient(140deg, rgba(109, 141, 255, 0.22), rgba(155, 123, 255, 0.08) 55%, var(--surface));
+}
+
+.hello {
+  font-size: 1.25rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.points {
+  color: var(--muted);
+}
+
+.points span {
+  color: var(--warn);
+  font-size: 1.4rem;
+  font-weight: 750;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.tile {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  height: 100%;
+  min-height: 6.5rem;
+  padding: 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.tile:active {
+  background: var(--surface-2);
+  border-color: var(--primary);
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
